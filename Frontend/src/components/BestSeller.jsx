@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../context/ShopContext";
+import ShopContext from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
 
@@ -10,12 +10,12 @@ const BestSeller = () => {
   useEffect(() => {
     const bestProducts = products.filter((item) => item.bestseller);
     setBestSeller(bestProducts.slice(0, 5));
-  }, []);
+  }, [products]);
 
   return (
     <div className="my-10">
       <div className="text-center text-3xl py-8">
-        <Title text2={"BEST"} texy2={"SELLERS"} />
+        <Title text1={"BEST"} text2={"SELLERS"} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia corrupti quisquam a quasi, voluptatum, mollitia quis nihil cupiditate aperiam molestias accusamus odit nam magni illum
           distinctio expedita sit necessitatibus? Porro.

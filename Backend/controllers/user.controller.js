@@ -2,7 +2,7 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { User } from "../models/user.model.js";
+import User from "../models/user.model.js";
 
 const userSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -79,16 +79,16 @@ const loginUser = async (req, res) => {
 // Route for admin login
 const adminLogin = async (req, res) => {
   try {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
-    if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-      const token = jwt.sign(email+password, process.env.JWT_SECRET);
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
       res.json({ success: true, token });
-    }else{
+    } else {
       res.status(401).json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-    res.json({ success: false, message:error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
