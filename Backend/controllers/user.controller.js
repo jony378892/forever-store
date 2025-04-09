@@ -23,14 +23,14 @@ const registerUser = async (req, res) => {
     const exists = await User.findOne({ email });
 
     if (exists) {
-      return res.status(400).json({ success: false, message: "User already exists" });
+      return res.json({ success: false, message: "User already exists" });
     }
 
     // Validating name, email and password
     try {
       userSchema.parse(req.body);
     } catch (error) {
-      return res.status(400).json({ success: false, message: error.errors[0].message });
+      return res.json({ success: false, message: error.errors[0].message });
     }
 
     // Hashing the password
@@ -48,7 +48,7 @@ const registerUser = async (req, res) => {
     // Proceed with user registration logic
     res.json({ success: true, token });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User doesn't exists" });
+      return res.json({ success: false, message: "User doesn't exists" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -72,7 +72,7 @@ const loginUser = async (req, res) => {
       return res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
@@ -85,7 +85,7 @@ const adminLogin = async (req, res) => {
       const token = jwt.sign(email + password, process.env.JWT_SECRET);
       res.json({ success: true, token });
     } else {
-      res.status(401).json({ success: false, message: "Invalid credentials" });
+      res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
     res.json({ success: false, message: error.message });

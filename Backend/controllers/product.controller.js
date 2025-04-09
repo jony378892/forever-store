@@ -42,7 +42,7 @@ const addProduct = async (req, res) => {
 
     res.json({ success: true, message: "Product added successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 
@@ -74,19 +74,19 @@ const singleProduct = async (req, res) => {
     const { productId } = req.body;
 
     if (!productId) {
-      return res.status(400).json({ success: false, message: "Product ID is required" });
+      return res.json({ success: false, message: "Product ID is required" });
     }
 
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(404).json({ success: false, message: "Product not found" });
+      return res.json({ success: false, message: "Product not found" });
     }
 
     res.json({ success: true, product });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, error: error.message });
+    res.json({ success: false, error: error.message });
   }
 };
 
