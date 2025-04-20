@@ -8,7 +8,7 @@ const BestSeller = () => {
   const [bestSeller, setBestSeller] = useState([]);
 
   useEffect(() => {
-    const bestProducts = products.filter((item) => item.bestseller);
+    const bestProducts = products.filter((item) => item.bestSeller);
     setBestSeller(bestProducts.slice(0, 5));
   }, [products]);
 
@@ -21,11 +21,15 @@ const BestSeller = () => {
           statements, each item is crafted with care and made to last.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-6">
-        {bestSeller.map((item, index) => (
-          <ProductItem key={index} id={item.id} name={item.name} image={item.image} price={item.price} />
-        ))}
-      </div>
+      {bestSeller.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-6 mt-10">
+          {bestSeller.map((item, index) => (
+            <ProductItem key={index} id={item.id} name={item.name} image={item.image} price={item.price} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No best sellers available at the moment.</p>
+      )}
     </div>
   );
 };

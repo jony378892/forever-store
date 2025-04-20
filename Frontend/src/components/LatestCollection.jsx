@@ -14,12 +14,14 @@ const LatestCollection = () => {
     }
   }, [products]);
 
+  useEffect(() => {}, [latestProducts]);
+
   if (!products || products.length === 0) {
-    return <div className="text-center my-10">Loading latest products...</div>;
+    return <div className="text-center my-10">No products found</div>;
   }
 
   return (
-    <div className="my-10">
+    <div className="mb-10">
       <div className="text-center py-8 text-3xl">
         <Title text1={"LATEST"} text2={"COLECTION"} />
         <p className="w-3/4 m-auto text-sm sm:test-sm md:text-base text-gray-600">
@@ -28,7 +30,7 @@ const LatestCollection = () => {
         </p>
       </div>
       {/* Rendering Products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-8 mt-10">
         {latestProducts.map((item, index) => (
           <ProductItem key={index} id={item._id} image={item.image} price={item.price} />
         ))}
