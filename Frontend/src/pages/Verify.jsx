@@ -8,16 +8,16 @@ import ShopContext from "../context/ShopContext";
 
 const Verify = () => {
   const { navigate, token, setCartItems, backendUrl } = useContext(ShopContext);
-  const { searchParams } = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
 
   const verifyPayment = async () => {
     try {
-      if (!token) null;
+      if (!token) return;
 
-      const response = await axios.post(backendUrl + "/api/order/verifyStripe", { success, orderId }, { Headers: { token } });
+      const response = await axios.post(backendUrl + "/api/order/verifyStripe", { success, orderId }, { headers: { token } });
       if (response.data.success) {
         setCartItems({});
         navigate("/orders");

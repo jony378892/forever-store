@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const ShopContext = createContext();
 
-export const ShopContextProvider = (props) => {
+export const ShopContextProvider = ({ children }) => {
   const currency = "$";
   const delivery_fee = 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -35,6 +35,8 @@ export const ShopContextProvider = (props) => {
       cartData[itemId][size] = 1;
     }
     setCartItems(cartData);
+
+    toast.success("Product added to cart");
 
     if (token) {
       try {
@@ -137,6 +139,7 @@ export const ShopContextProvider = (props) => {
     showSearch,
     setShowSearch,
     cartItems,
+    setCartItems,
     addToCart,
     getCartCount,
     updateQuantity,
@@ -147,7 +150,7 @@ export const ShopContextProvider = (props) => {
     setToken,
   };
 
-  return <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>;
+  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 
 export default ShopContext;

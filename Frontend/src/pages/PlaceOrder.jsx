@@ -66,7 +66,7 @@ const PlaceOrder = () => {
 
           if (response.data.success) {
             setCartItems({});
-            navigate("/orders");
+            navigate("/");
           } else {
             toast.error(response.data.message);
           }
@@ -75,6 +75,7 @@ const PlaceOrder = () => {
         case "stripe": {
           const responseStripe = await axios.post(backendUrl + "/api/order/stripe", orderData, { headers: { token } });
           if (responseStripe.data.success) {
+            setCartItems({});
             const { session_url } = responseStripe.data;
             window.location.replace(session_url);
           } else {
@@ -85,6 +86,9 @@ const PlaceOrder = () => {
         }
 
         default:
+          {
+            toast.error("Select a payment method");
+          }
           break;
       }
     } catch (error) {
@@ -123,21 +127,22 @@ const PlaceOrder = () => {
         </div>
         <div className="mt-12">
           <Title text1="PAYMENT" text2="METHOD" />
+
           {/* Payment Methods */}
+
           <div className="flex gap-3 flex-col lg:flex-row">
+            {/* Stripe payment method */}
             <div onClick={() => setMethod("stripe")} className="flex items-center hap-3 border p-2 px-3 cursor-pointer">
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method === "stripe" ? "bg-green-400" : ""}`}></p>
               <img src={assets.stripe_logo} alt="" className="mx-4 h-5" />
             </div>
-            <div onClick={() => setMethod("razorpay")} className="flex items-center hap-3 border p-2 px-3 cursor-pointer">
-              <p className={`min-w-3.5 h-3.5 border rounded-full ${method === "razorpay" ? "bg-green-400" : ""}`}></p>
-              <img src={assets.razorpay_logo} alt="" className="mx-4 h-5" />
-            </div>
+            {/* Cash on delivery */}
             <div onClick={() => setMethod("cod")} className="flex items-center hap-3 border p-2 px-3 cursor-pointer">
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method === "cod" ? "bg-green-400" : ""}`}></p>
               <p className="text-sm text-gray-500 font-medium mx-4">CASH ON DELIVERY</p>
             </div>
           </div>
+
           <div className="w-full text-end mt-8">
             <button type="submit" className="bg-black text-white px-16 py-3 text-sm">
               PLACE ORDER
