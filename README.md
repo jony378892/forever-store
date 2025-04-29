@@ -4,6 +4,10 @@
 
 This project is a fully functional e-commerce platform designed to provide a seamless shopping experience for users. It includes features for customers, administrators ensuring a comprehensive solution for online retail.
 
+## Live Demo
+
+Check out the live version of the project [here](https://frontend-git-main-jonys-projects-c5f2d040.vercel.app).
+
 ## Features
 
 ### User Features
