@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ShopContext from "../context/ShopContext.jsx";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import { ClipLoader } from "react-spinners";
 
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
@@ -27,7 +28,9 @@ const LatestCollection = () => {
       </div>
       {/* Rendering Products */}
       {!products || products.length === 0 ? (
-        <div className="text-center my-10">No products found</div>
+        <div className="text-center my-10">
+          <ClipLoader />
+        </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-8 mt-10">
           {latestProducts.map((item, index) => (

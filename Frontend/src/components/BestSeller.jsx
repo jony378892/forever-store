@@ -2,19 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import ShopContext from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import { ClipLoader } from "react-spinners";
 
 const BestSeller = () => {
   const { products } = useContext(ShopContext);
   const [bestSeller, setBestSeller] = useState([]);
 
   useEffect(() => {
-    const bestProducts = products.filter((item) => item.bestSeller);
-    setBestSeller(bestProducts.slice(0, 5));
+    const fetchProducts = async () => {
+      const bestProducts = await products.filter((item) => item.bestSeller);
+      setBestSeller(bestProducts.slice(0, 5));
+    };
+
+    fetchProducts();
   }, [products]);
 
   return (
     <div className="my-10">
-      {bestSeller.length > 0 && (
+      {bestSeller.length > 0 ? (
         <>
           <div className="text-center text-3xl py-8">
             <Title text1={"BEST"} text2={"SELLERS"} />
@@ -29,6 +34,11 @@ const BestSeller = () => {
             ))}
           </div>
         </>
+      ) : (
+        <div className="flex items-center justify-center my-10">
+          {" "}
+          <ClipLoader />
+        </div>
       )}
     </div>
   );
