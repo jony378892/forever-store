@@ -6,7 +6,7 @@ This project is a fully functional e-commerce platform designed to provide a sea
 
 ## Live Demo
 
-Check out the live version of the project [here](https://frontend-git-main-jonys-projects-c5f2d040.vercel.app).
+Check out the live version of the project [here](https://forever-clothing-store.vercel.app/).
 
 ## Features
 
