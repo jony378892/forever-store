@@ -13,8 +13,8 @@
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^7.4.0",
-    "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {

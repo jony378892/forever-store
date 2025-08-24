@@ -34,22 +34,39 @@ const Product = () => {
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
           <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             {productData.image.map((item, index) => (
-              <img onClick={() => setImage(item)} src={item} key={index} className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer" alt={item.name} />
+              <img
+                onClick={() => setImage(item)}
+                src={item}
+                key={index}
+                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
+                alt={item.name}
+                loading="lazy"
+              />
             ))}
           </div>
           <div className="w-full sm:w-[80%] ">
-            <img src={image} className="w-full h-auto" alt={image.name} />
+            <img
+              src={image}
+              className="w-full h-auto"
+              alt={image.name}
+              loading="lazy"
+            />
           </div>
         </div>
         {/* Product Info */}
         <div className="flex-1 ">
           <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
           <div className="flex items-center gap-1 mt-2">
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_dull_icon} alt="" className="w-3" />
+            <img src={assets.star_icon} alt="" className="w-3" loading="lazy" />
+            <img src={assets.star_icon} alt="" className="w-3" loading="lazy" />
+            <img src={assets.star_icon} alt="" className="w-3" loading="lazy" />
+            <img src={assets.star_icon} alt="" className="w-3" loading="lazy" />
+            <img
+              src={assets.star_dull_icon}
+              alt=""
+              className="w-3"
+              loading="lazy"
+            />
             <p className="pl-2"> (122) </p>
           </div>
           <p className="mt-5 text-3xl font-medium">
@@ -60,13 +77,22 @@ const Product = () => {
             <p>Select Size</p>
             <div className="flex gap-2">
               {productData.sizes.map((item, index) => (
-                <button key={index} className={`border py-2 px-4 bg-gray-100 ${item === size ? "border-orange-500 " : ""}`} onClick={() => setSize(item)}>
+                <button
+                  key={index}
+                  className={`border py-2 px-4 bg-gray-100 ${
+                    item === size ? "border-orange-500 " : ""
+                  }`}
+                  onClick={() => setSize(item)}
+                >
                   {item}{" "}
                 </button>
               ))}
             </div>
           </div>
-          <button onClick={() => addToCart(productData._id, size)} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">
+          <button
+            onClick={() => addToCart(productData._id, size)}
+            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+          >
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
@@ -85,17 +111,24 @@ const Product = () => {
         </div>
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, voluptatibus, voluptate, iste architecto deserunt id vero in reiciendis quod repellendus et eaque beatae eveniet ea
-            delectus dicta saepe doloremque alias.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
+            voluptatibus, voluptate, iste architecto deserunt id vero in
+            reiciendis quod repellendus et eaque beatae eveniet ea delectus
+            dicta saepe doloremque alias.
           </p>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta exercitationem aperiam nesciunt tempore vitae quae necessitatibus laborum eum labore corporis in voluptatibus voluptatum
-            rerum, recusandae laboriosam odio magni molestias officia?
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta
+            exercitationem aperiam nesciunt tempore vitae quae necessitatibus
+            laborum eum labore corporis in voluptatibus voluptatum rerum,
+            recusandae laboriosam odio magni molestias officia?
           </p>
         </div>
       </div>
       {/* Display related product */}
-      <RelatedProduct category={productData.category} subCategory={productData.subCategory} />
+      <RelatedProduct
+        category={productData.category}
+        subCategory={productData.subCategory}
+      />
     </div>
   ) : (
     <div className="opacity-0"></div>

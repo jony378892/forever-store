@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import ShopContext from "../context/ShopContext";
 import Title from "../components/Title";
 import { assets } from "../assets/assets";
-import CartTotal from "../components/cartTotal";
+import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate } =
+    useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -41,7 +42,10 @@ const Cart = () => {
       {cartData.length === 0 ? (
         <div>
           <p className="text-lg">No item in your cart </p>
-          <button className="px-4 py-3 bg-black text-white mt-5 " onClick={handleClick}>
+          <button
+            className="px-4 py-3 bg-black text-white mt-5 "
+            onClick={handleClick}
+          >
             Go to shopping
           </button>
         </div>
@@ -49,31 +53,57 @@ const Cart = () => {
         <>
           <div className="">
             {cartData.map((item, index) => {
-              const productsData = products.find((product) => product._id === item._id);
+              const productsData = products.find(
+                (product) => product._id === item._id
+              );
 
               return (
-                <div key={index} className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4">
+                <div
+                  key={index}
+                  className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
+                >
                   <div className="flex items-start gap-6">
-                    <img src={productsData.image[0]} className="w-16 sm:w-20" alt="" />
+                    <img
+                      src={productsData.image[0]}
+                      className="w-16 sm:w-20"
+                      alt=""
+                    />
                     <div>
-                      <p className="text-sm sm:text-lg font-medium">{productsData.name}</p>
+                      <p className="text-sm sm:text-lg font-medium">
+                        {productsData.name}
+                      </p>
                       <div className="flex items-center gap-5 mt-2">
                         <p>
                           {currency} {productsData.price}
                         </p>
-                        <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">{item.size}</p>
+                        <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
+                          {item.size}
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   <input
-                    onChange={(e) => (e.target.value === "" || e.target.value === "0" ? null : updateQuantity(item._id, item.size, Number(e.target.value)))}
+                    onChange={(e) =>
+                      e.target.value === "" || e.target.value === "0"
+                        ? null
+                        : updateQuantity(
+                            item._id,
+                            item.size,
+                            Number(e.target.value)
+                          )
+                    }
                     type="number"
                     defaultValue={item.quantity}
                     className="border max-w-20 px-1 sm:px-2 py-1"
                     min={1}
                   />
-                  <img onClick={() => updateQuantity(item._id, item.size, 0)} src={assets.bin_icon} alt="" className="w-4 mr-4 sm:w-5 cursor-pointer" />
+                  <img
+                    onClick={() => updateQuantity(item._id, item.size, 0)}
+                    src={assets.bin_icon}
+                    alt=""
+                    className="w-4 mr-4 sm:w-5 cursor-pointer"
+                  />
                 </div>
               );
             })}
@@ -82,7 +112,10 @@ const Cart = () => {
             <div className="w-full sm:w-[450px] ">
               <CartTotal />
               <div className="w-full text-end">
-                <button onClick={() => navigate("/place-order")} className="bg-black text-white text-sm my-8 px-8 py-3 active:bg-gray-700">
+                <button
+                  onClick={() => navigate("/place-order")}
+                  className="bg-black text-white text-sm my-8 px-8 py-3 active:bg-gray-700"
+                >
                   PROCEED TO CHECKOUT
                 </button>
               </div>
