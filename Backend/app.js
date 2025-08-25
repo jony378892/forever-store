@@ -27,6 +27,10 @@ app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
+app.use("/", (req, res) => {
+  res.send("Welcome to Forever Clothing Sore");
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
