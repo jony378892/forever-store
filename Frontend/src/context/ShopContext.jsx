@@ -3,6 +3,9 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../hooks/useAxios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ShopContext = createContext();
 
@@ -13,9 +16,10 @@ export const ShopContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-  const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const addToCart = async (itemId, size) => {
     if (!size) {
@@ -40,7 +44,11 @@ export const ShopContextProvider = ({ children }) => {
 
     if (token) {
       try {
-        await axios.post(backendUrl + "/api/cart/add", { itemId, size }, { headers: { token } });
+        await axios.post(
+          backendUrl + "/api/cart/add",
+          { itemId, size },
+          { headers: { token } },
+        );
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -67,7 +75,11 @@ export const ShopContextProvider = ({ children }) => {
 
     if (token) {
       try {
-        await axios.post(backendUrl + "/api/cart/update", { itemId, size, quantity }, { headers: { token } });
+        await axios.post(
+          backendUrl + "/api/cart/update",
+          { itemId, size, quantity },
+          { headers: { token } },
+        );
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -93,23 +105,21 @@ export const ShopContextProvider = ({ children }) => {
     return totalAmount;
   };
 
-  const getProductsData = async () => {
-    try {
-      const response = await axios.get(backendUrl + "/api/product/list");
-      if (response.data.success) {
-        setProducts(response.data.products);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
+  const { data: products = [], isLoading: productsLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const products = await axiosInstance.get("/api/product/list");
+      return products.data.products;
+    },
+  });
 
   const getUserCart = async (token) => {
     try {
-      const response = await axios.post(backendUrl + "/api/cart/get", {}, { headers: { token } });
+      const response = await axios.post(
+        backendUrl + "/api/cart/get",
+        {},
+        { headers: { token } },
+      );
       if (response.data.success) {
         setCartItems(response.data.cartData);
       }
@@ -120,10 +130,6 @@ export const ShopContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getProductsData();
-  }, []);
-
-  useEffect(() => {
     if (!token && localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
       getUserCart(localStorage.getItem("token"));
@@ -132,6 +138,7 @@ export const ShopContextProvider = ({ children }) => {
 
   const value = {
     products,
+    productsLoading,
     currency,
     delivery_fee,
     search,
